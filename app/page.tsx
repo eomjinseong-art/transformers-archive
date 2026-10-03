@@ -6,11 +6,13 @@ import { JsonLd } from "@/components/JsonLd";
 import { brandSlug, brandsWithCars, cars, carsForFilm } from "@/data/cars";
 import { LIVE_ACTION_COUNT, films } from "@/data/films";
 import { jsonLd, pageMetadata, websiteLd } from "@/lib/seo";
+import { FILM_ARCHIVES } from "@/data/filmArchives";
 import {
   BOND_ARCHIVE_LABEL,
   FF_ARCHIVE_LABEL,
   MI_ARCHIVE_LABEL,
   SITE_NAME,
+  archiveNetworkUrl,
   SITE_SUB,
   SITE_TAGLINE,
   bondArchiveUrl,
@@ -149,6 +151,7 @@ export default function HomePage() {
             { href: ffArchiveUrl("home"), label: FF_ARCHIVE_LABEL, blurb: "수프라부터 차저까지, 패밀리의 차." },
             { href: bondArchiveUrl("home"), label: BOND_ARCHIVE_LABEL, blurb: "애스턴 마틴 DB5와 본드카." },
             { href: miArchiveUrl("home"), label: MI_ARCHIVE_LABEL, blurb: "에단 헌트 옆의 차와 바이크." },
+            ...FILM_ARCHIVES.map((a) => ({ href: archiveNetworkUrl(a.url, "/", "home"), label: a.label, blurb: a.blurb })),
           ].map((site) => (
             <a key={site.label} href={site.href} className="rounded-xl border border-line bg-card p-5 hover:border-gold/60">
               <h3 className="font-serif text-lg text-paper">{site.label}</h3>

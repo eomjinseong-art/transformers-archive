@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { FILM_ARCHIVES } from "@/data/filmArchives";
 import {
   BOND_ARCHIVE_LABEL,
   FF_ARCHIVE_LABEL,
   MI_ARCHIVE_LABEL,
   SITE_NAME,
+  archiveNetworkUrl,
   bondArchiveUrl,
   ffArchiveUrl,
   miArchiveUrl,
@@ -29,6 +31,11 @@ export function NetworkStrip({ medium }: { medium: "header" | "footer" }) {
         <a href={miArchiveUrl(medium)} className={linkClass}>
           {MI_ARCHIVE_LABEL}
         </a>
+        {FILM_ARCHIVES.map((site) => (
+          <a key={site.id} href={archiveNetworkUrl(site.url, "/", medium)} className={linkClass}>
+            {site.label}
+          </a>
+        ))}
       </div>
     </div>
   );
