@@ -25,11 +25,15 @@ export function pageMetadata({
   title,
   description,
   path,
+  image,
 }: {
   title: string;
   description: string;
   path: string;
+  /** 페이지 고유 사진(절대 URL). 없으면 사이트 기본 OG 이미지. */
+  image?: { url: string; width: number; height: number; alt: string };
 }): Metadata {
+  const ogImages = image ? [image] : [OG_IMAGE];
   const isHome = path === "/" || path === "";
   const documentTitle = isHome ? SITE_NAME : `${title} · ${SITE_NAME}`;
   const url = canonicalUrl(path);
@@ -45,13 +49,13 @@ export function pageMetadata({
       siteName: SITE_NAME,
       title: documentTitle,
       description: text,
-      images: [OG_IMAGE],
+      images: ogImages,
     },
     twitter: {
       card: "summary_large_image",
       title: documentTitle,
       description: text,
-      images: [OG_IMAGE.url],
+      images: [image ? image.url : OG_IMAGE.url],
     },
   };
 }
@@ -130,7 +134,7 @@ export function movieLd(film: Film) {
 }
 
 /** Thing, not Product: this archive does not sell the car. */
-export function carThingLd(car: TfCar) {
+export function carThingLd(car: TfCar, imageUrl?: string) {
   return {
     "@type": "Thing",
     additionalType: "https://schema.org/Vehicle",
@@ -139,6 +143,7 @@ export function carThingLd(car: TfCar) {
     description: car.oneLiner,
     url: canonicalUrl(`/cars/${car.slug}`),
     brand: { "@type": "Brand", name: car.brandKo },
+    ...(imageUrl ? { image: imageUrl } : {}),
   };
 }
 

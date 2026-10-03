@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { CarCard } from "@/components/CarCard";
+import { CarCard, kindTone } from "@/components/CarCard";
+import { CreditedMedia } from "@/components/CreditedMedia";
 import { FactionBadge } from "@/components/FactionBadge";
 import { JsonLd } from "@/components/JsonLd";
 import { SameBrandCars } from "@/components/SameBrandCars";
 import { SisterCta } from "@/components/SisterCta";
 import { Sources } from "@/components/Sources";
+import { carPhoto } from "@/data/carPhotos";
 import { brandSlug, cars, getCar } from "@/data/cars";
 import { getFilm } from "@/data/films";
 import {
@@ -18,7 +20,7 @@ import {
   jsonLd,
   pageMetadata,
 } from "@/lib/seo";
-import { AUTOPIX_GUIDES, TF_CAR_CTA_LABEL, autopixGuideUrl } from "@/lib/site";
+import { AUTOPIX_GUIDES, SITE_URL, TF_CAR_CTA_LABEL, autopixGuideUrl } from "@/lib/site";
 
 export function generateStaticParams() {
   return cars.map((car) => ({ slug: car.slug }));
@@ -36,10 +38,14 @@ export async function generateMetadata({
   const { slug } = await params;
   const car = getCar(slug);
   if (!car) return { title: "영화 속 차량" };
+  const photo = carPhoto(car.slug);
   return pageMetadata({
     title: carSeoTitle(car),
     description: carSeoDescription(car, filmsOf(car.filmSlugs).map((film) => `${film.titleKo}(${film.year})`)),
     path: `/cars/${car.slug}`,
+    image: photo
+      ? { url: `${SITE_URL}${photo.src}`, width: photo.width, height: photo.height, alt: photo.alt }
+      : undefined,
   });
 }
 
@@ -50,6 +56,7 @@ export default async function CarPage({ params }: { params: Promise<{ slug: stri
   const carFilms = filmsOf(car.filmSlugs);
   const sameCharacter = cars.filter((other) => other.slug !== car.slug && other.characterEn === car.characterEn);
   const guide = AUTOPIX_GUIDES[car.guide];
+  const photo = carPhoto(car.slug);
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-8">
@@ -60,7 +67,7 @@ export default async function CarPage({ params }: { params: Promise<{ slug: stri
             { name: "차량", path: "/cars" },
             { name: `${car.characterKo} · ${car.nameKo}`, path: `/cars/${car.slug}` },
           ]),
-          carThingLd(car),
+          carThingLd(car, photo ? `${SITE_URL}${photo.src}` : undefined),
         ])}
       />
       <Breadcrumbs
@@ -79,6 +86,27 @@ export default async function CarPage({ params }: { params: Promise<{ slug: stri
         <p className="mt-1 text-sm text-muted">{car.nameEn}</p>
         <p className="mt-4 text-base leading-relaxed text-paper">{car.oneLiner}</p>
       </header>
+
+      <section className="mt-6" aria-label="실제 차량 사진">
+        <CreditedMedia
+          image={photo}
+          tone={kindTone[car.kind]}
+          alt={photo?.alt ?? `${car.nameKo} 색 배경`}
+          aspectClass="aspect-[16/10]"
+          sizes="(max-width: 768px) 100vw, 768px"
+          compactCredit={false}
+          priority
+        />
+        {photo ? (
+          <p className="mt-1 text-[11px] leading-5 text-muted">
+            영화 장면이 아니라 같은 차종의 실제 차량 사진입니다. 색과 세부 사양은 영화 속 차와 다를 수 있습니다.
+          </p>
+        ) : (
+          <p className="mt-2 text-[11px] leading-5 text-muted">
+            이 차는 자유 이용 라이선스로 쓸 수 있는 실제 차량 사진을 찾지 못해 색 배경으로 둡니다.
+          </p>
+        )}
+      </section>
 
       <section className="mt-8">
         <h2 className="font-serif text-xl text-gold">한눈에</h2>

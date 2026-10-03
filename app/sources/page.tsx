@@ -1,14 +1,20 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ImageCredit } from "@/components/ImageCredit";
+import { carPhotos } from "@/data/carPhotos";
+import { cars } from "@/data/cars";
 import { WIKI_CAST } from "@/data/sources";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "출처와 기준",
-  description: "트랜스포머 아카이브가 차량 정보를 고르는 기준과 참고한 자료. 자료끼리 연식이 다르면 어떻게 적는지 설명합니다.",
+  description: "트랜스포머 아카이브가 차량 정보를 고르는 기준과 참고한 자료, 차량 사진의 저작자·라이선스·출처. 자료끼리 연식이 다르면 어떻게 적는지 설명합니다.",
   path: "/sources",
 });
 
 export default function SourcesPage() {
+  const withPhoto = cars.filter((car) => carPhotos[car.slug]);
+  const withoutPhoto = cars.filter((car) => !carPhotos[car.slug]);
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 text-sm leading-7 text-paper">
       <h1 className="font-serif text-3xl">출처와 기준</h1>
@@ -30,7 +36,46 @@ export default function SourcesPage() {
         <li>《범블비》·《비스트의 서막》의 옵티머스는 1987년형 프레이트라이너 FLA입니다. 프레이트라이너 아고시는 4편 갈바트론입니다.</li>
       </ul>
       <h2 className="mt-8 font-serif text-xl text-gold">사진</h2>
-      <p className="mt-3">포스터와 영화 스틸은 쓰지 않습니다. 차량 카드는 색 배경만 씁니다.</p>
+      <ul className="mt-3 list-disc space-y-2 pl-5">
+        <li>포스터, 영화 스틸, 스크린숏, 홍보 이미지는 쓰지 않습니다. 영화 차량을 흉내 낸 레플리카 사진도 쓰지 않습니다.</li>
+        <li>차량 사진은 위키미디어 공용에 올라온 같은 차종의 실제 차량 사진 가운데 CC BY, CC BY-SA, CC0, 퍼블릭 도메인인 것만 씁니다. 사이트에 맞게 크기만 줄이고 WebP로 바꿨습니다.</li>
+        <li>영화 속 차와 연식·사양이 정확히 같은 사진이 없으면 가장 가까운 차종을 쓰고 &lsquo;참고 차종&rsquo;으로 적습니다.</li>
+        <li>맞는 자유 이용 사진이 없는 차는 색 배경으로 둡니다.</li>
+      </ul>
+
+      <h3 className="mt-6 font-serif text-lg text-paper">
+        차량 사진 출처 <span className="text-sm text-muted">({withPhoto.length}대)</span>
+      </h3>
+      <ul className="mt-3 divide-y divide-line rounded-lg border border-line">
+        {withPhoto.map((car) => (
+          <li key={car.slug} className="px-4 py-3">
+            <Link href={`/cars/${car.slug}`} className="text-paper hover:text-gold">
+              {car.characterKo} · {car.nameKo}
+            </Link>
+            <ImageCredit image={carPhotos[car.slug]} as="p" />
+          </li>
+        ))}
+      </ul>
+
+      {withoutPhoto.length > 0 ? (
+        <>
+          <h3 className="mt-6 font-serif text-lg text-paper">
+            사진 없이 색 배경으로 둔 차 <span className="text-sm text-muted">({withoutPhoto.length}대)</span>
+          </h3>
+          <ul className="mt-3 list-disc space-y-1 pl-5">
+            {withoutPhoto.map((car) => (
+              <li key={car.slug}>
+                <Link href={`/cars/${car.slug}`} className="hover:text-gold">
+                  {car.characterKo} · {car.nameKo}
+                </Link>
+                {car.slug === "bumblebee-camaro-2014-concept" ? (
+                  <span className="text-muted"> — 영화용으로 만든 콘셉트카라, 영화 차량을 찍은 사진 말고는 같은 차종 사진이 없습니다.</span>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : null}
       <p className="mt-8 text-muted">
         기본 자료:{" "}
         <a href={WIKI_CAST.href} className="underline decoration-line underline-offset-4 hover:text-gold" target="_blank" rel="noopener noreferrer">

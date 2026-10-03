@@ -10,3 +10,18 @@ export type SearchHit = {
   hint: string;
   keywords?: string;
 };
+
+export type LicensedImage = {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  author: string;
+  license: string;
+  licenseUrl: string;
+  sourceUrl: string;
+  sourceLabel: string;
+  objectPosition?: string;
+  /** Shown when the photo is a nearby model, not the film car's exact variant. */
+  referenceNote?: string;
+};
