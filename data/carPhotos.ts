@@ -86,6 +86,18 @@ export const carPhotos: Record<string, LicensedImage> = {
     sourceUrl: "https://commons.wikimedia.org/wiki/File:1967_Chevrolet_Camaro_%282469246170%29.jpg",
     sourceLabel: "위키미디어 공용",
   },
+  "bumblebee-camaro-2014-concept": {
+    src: "/images/cars/bumblebee-camaro-2014-concept.webp",
+    width: 1200,
+    height: 800,
+    alt: "2014 오토 차이나(베이징 모터쇼)에 전시된 노랑·검정 쉐보레 카마로 콘셉트 실제 차량 사진",
+    author: "El monty",
+    license: "CC BY-SA 4.0",
+    licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Chevrolet_Camaro_Concept_2014_(27).JPG",
+    sourceLabel: "위키미디어 공용",
+    referenceNote: "참고: 영화 장면이 아니라 2014년 4월 오토 차이나(베이징)에 전시된 카마로 콘셉트 실차 사진",
+  },
   "bumblebee-camaro-sixth-gen": {
     src: "/images/cars/bumblebee-camaro-sixth-gen.webp",
     width: 1200,
