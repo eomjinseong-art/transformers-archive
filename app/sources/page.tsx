@@ -68,9 +68,6 @@ export default function SourcesPage() {
                 <Link href={`/cars/${car.slug}`} className="hover:text-gold">
                   {car.characterKo} · {car.nameKo}
                 </Link>
-                {car.slug === "bumblebee-camaro-2014-concept" ? (
-                  <span className="text-muted"> — 영화용으로 만든 콘셉트카라, 영화 차량을 찍은 사진 말고는 같은 차종 사진이 없습니다.</span>
-                ) : null}
               </li>
             ))}
           </ul>
