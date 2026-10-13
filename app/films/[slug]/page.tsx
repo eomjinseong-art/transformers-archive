@@ -17,6 +17,7 @@ import {
   movieLd,
   pageMetadata,
 } from "@/lib/seo";
+import { CoupangCard } from "@/components/CoupangCard";
 
 export function generateStaticParams() {
   return films.map((film) => ({ slug: film.slug }));
@@ -151,6 +152,7 @@ export default async function FilmPage({ params }: { params: Promise<{ slug: str
       </nav>
 
       <Sources sources={film.sources} />
+      <CoupangCard />
     </article>
   );
 }
