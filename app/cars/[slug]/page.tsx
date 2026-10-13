@@ -21,6 +21,7 @@ import {
   pageMetadata,
 } from "@/lib/seo";
 import { AUTOPIX_GUIDES, SITE_URL, TF_CAR_CTA_LABEL, autopixGuideUrl } from "@/lib/site";
+import { CoupangCard } from "@/components/CoupangCard";
 
 export function generateStaticParams() {
   return cars.map((car) => ({ slug: car.slug }));
@@ -194,6 +195,7 @@ export default async function CarPage({ params }: { params: Promise<{ slug: stri
       </p>
 
       <Sources sources={car.sources} />
+      <CoupangCard />
     </article>
   );
 }
