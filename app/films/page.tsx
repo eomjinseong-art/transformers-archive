@@ -4,6 +4,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { carsForFilm } from "@/data/cars";
 import { films } from "@/data/films";
 import { itemListLd, jsonLd, pageMetadata } from "@/lib/seo";
+import { CoupangCard } from "@/components/CoupangCard";
 
 export const metadata: Metadata = pageMetadata({
   title: "트랜스포머 영화 순서",
@@ -30,8 +31,9 @@ export default function FilmsPage() {
         《비스트의 서막》은 1994년이 배경입니다. 이야기 속 시간 순서로 보면 《범블비》 → 《비스트의 서막》 → 1편 순이 됩니다.
         애니메이션 《트랜스포머 ONE》은 지구 차량이 나오지 않아 차량 목록에는 없습니다.
       </p>
-      <ol className="mt-8 space-y-4">
-        {films.map((film) => {
+      {(() => {
+        const mid = Math.min(9, Math.max(1, Math.floor(films.length / 2)));
+        const item = (film: (typeof films)[number]) => {
           const count = carsForFilm(film.slug).length;
           return (
             <li key={film.slug}>
@@ -53,8 +55,19 @@ export default function FilmsPage() {
               </Link>
             </li>
           );
-        })}
-      </ol>
+        };
+        return (
+          <>
+            <ol className="mt-8 space-y-4">
+              {films.slice(0, mid).map(item)}
+            </ol>
+            <CoupangCard />
+            <ol className="mt-4 space-y-4">
+              {films.slice(mid).map(item)}
+            </ol>
+          </>
+        );
+      })()}
     </div>
   );
 }
