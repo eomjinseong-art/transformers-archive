@@ -23,6 +23,12 @@ export function Footer() {
         </div>
         <p className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs">
           <a
+            href="https://gun-archive.vercel.app/?utm_source=transformers-archive&utm_medium=footer&utm_campaign=archive-network"
+            className="underline decoration-line underline-offset-4 hover:text-gold"
+          >
+            영화 속 권총 · 건 아카이브
+          </a>
+          <a
             href={autopixUrl("footer")}
             className="underline decoration-line underline-offset-4 hover:text-gold"
           >
