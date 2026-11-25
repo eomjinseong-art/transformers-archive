@@ -1,3 +1,4 @@
+import { NadooAd } from "@/components/NadooAd";
 import type { Metadata } from "next";
 import { AutopixBanner } from "@/components/AutopixBanner";
 import { CarExplorer } from "@/components/CarExplorer";
@@ -29,6 +30,7 @@ export default function CarsPage() {
         오토봇·디셉티콘·테러콘이 변신한 실제 차량 {cars.length}대입니다. 비행기·탱크·가전제품처럼 도로 차량이
         아닌 변신 모드와, 이름 없이 스친 차는 뺐습니다. 자료끼리 연식이나 모델명이 다르면 차량 페이지에 함께 적었습니다.
       </p>
+      <NadooAd inline />
       <div className="mt-6">
         <AutopixBanner content="cars" />
       </div>

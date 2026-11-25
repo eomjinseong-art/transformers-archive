@@ -1,3 +1,4 @@
+import { NadooAd } from "@/components/NadooAd";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ImageCredit } from "@/components/ImageCredit";
@@ -30,6 +31,7 @@ export default function SourcesPage() {
         <li>팬 위키 TFWiki의 캐릭터 문서로 줄거리 속 장면을 맞춰 보았습니다.</li>
         <li>두 자료가 연식·모델명을 다르게 적으면, 제목에서는 확실한 부분만 쓰고 페이지 안 &lsquo;자료 차이&rsquo; 칸에 양쪽을 모두 적습니다.</li>
       </ul>
+      <NadooAd inline />
       <h2 className="mt-8 font-serif text-xl text-gold">자주 틀리는 것</h2>
       <ul className="mt-3 list-disc space-y-2 pl-5">
         <li>4·5편 옵티머스 프라임은 웨스턴 스타 5700입니다. 웨스턴 스타 4900은 5편의 디셉티콘 온슬로트입니다.</li>
