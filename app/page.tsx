@@ -1,3 +1,4 @@
+import { NadooAd } from "@/components/NadooAd";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { AutopixBanner } from "@/components/AutopixBanner";
@@ -125,6 +126,7 @@ export default function HomePage() {
         </ol>
       </section>
 
+      <NadooAd inline />
       <section className="mx-auto max-w-6xl px-4 py-12">
         <h2 className="font-serif text-2xl text-paper">브랜드로 보기</h2>
         <ul className="mt-5 flex flex-wrap gap-2">

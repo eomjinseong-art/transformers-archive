@@ -1,3 +1,4 @@
+import { NadooAd } from "@/components/NadooAd";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -110,6 +111,7 @@ export default async function FilmPage({ params }: { params: Promise<{ slug: str
         ))}
       </section>
 
+      <NadooAd inline />
       <section className="mt-10">
         <h2 className="font-serif text-xl text-gold">
           {film.titleKo} 등장 차량 {filmCars.length > 0 ? `${filmCars.length}대` : ""}
